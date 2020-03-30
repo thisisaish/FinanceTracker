@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/travel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ft_travel"
+                android:background="@drawable/catagory_card"
+                android:padding="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="15dp" />
+
+            <ImageButton
+                android:id="@+id/edu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ft_edu"
+                android:background="@drawable/catagory_card"
+                android:padding="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="15dp" />
+
+            <ImageButton
+                android:id="@+id/fuel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ft_fuel"
+                android:background="@drawable/catagory_card"
+                android:padding="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="15dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <ImageButton
+                android:id="@+id/milk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ft_milk"
+                android:background="@drawable/catagory_card"
+                android:padding="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="15dp" />
+
+            <ImageButton
+                android:id="@+id/health"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ft_health"
+                android:background="@drawable/catagory_card"
+                android:padding="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="15dp" />
+
+            <ImageButton
+                android:id="@+id/grocery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ft_grocery"
+                android:background="@drawable/catagory_card"
+                android:padding="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="15dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ft_food"
+                android:background="@drawable/catagory_card"
+                android:padding="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="15dp" />
+
+            <ImageButton
+                android:id="@+id/bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ft_bank"
+                android:background="@drawable/catagory_card"
+                android:padding="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="15dp" />
+
+            <ImageButton
+                android:id="@+id/clothes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ft_clothes"
+                android:background="@drawable/catagory_card"
+                android:padding="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="15dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <ImageButton
+                android:id="@+id/medicines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ft_medi"
+                android:background="@drawable/catagory_card"
+                android:padding="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="15dp" />
+
+            <ImageButton
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ft_savings"
+                android:background="@drawable/catagory_card"
+                android:padding="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="15dp" />
+
+            <ImageButton
+                android:id="@+id/entertainment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ft_entertainment"
+                android:background="@drawable/catagory_card"
+                android:padding="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="15dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

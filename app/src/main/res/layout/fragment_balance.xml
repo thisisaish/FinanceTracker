@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="284dp"
+        android:src="@mipmap/wallet" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/balance_card"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Credit card"
+            android:textColor="@color/textColor"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/cc_value"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="75dp"
+            android:text="Rs.0.00"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/textColor"
+            android:textSize="15sp"
+            android:gravity="end" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/balance_card"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cash"
+            android:textColor="@color/textColor"
+            android:padding="20dp"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/cash_value"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="Rs.0.00"
+            android:layout_marginLeft="125dp"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/textColor"
+            android:textSize="15sp"
+            android:gravity="end" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/balance_card"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Savings"
+            android:textColor="@color/textColor"
+            android:padding="20dp"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/savings_value"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="Rs.0.00"
+            android:layout_marginLeft="100dp"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/textColor"
+            android:textSize="15sp"
+            android:gravity="end" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/textColor"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/total_value"
+            android:layout_width="147dp"
+            android:layout_height="wrap_content"
+            android:text="Rs.0.00"
+            android:layout_marginLeft="130dp"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/textColor"
+            android:textSize="15sp"
+            android:gravity="end" />
+
+    </LinearLayout>
+
+</LinearLayout>
