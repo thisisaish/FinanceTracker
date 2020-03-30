@@ -7,4 +7,6 @@
     <color name="bgColor">#11FFFFFF</color>
     <color name="calendar">#37FFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="graphStart">#DCFA5080</color>
+    <color name="graphEnd">#ADFA5080</color>
 </resources>

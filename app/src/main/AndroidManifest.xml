@@ -22,6 +22,7 @@
         <activity android:name=".Expentiture">
         </activity>
         <activity android:name=".BalanceActivity"></activity>
+        <activity android:name=".ReportsActivity"></activity>
     </application>
 
 </manifest>

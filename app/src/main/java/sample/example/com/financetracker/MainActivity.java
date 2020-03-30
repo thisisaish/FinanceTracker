@@ -93,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
                 if(x1 < x2){
                     Intent balance = new Intent(MainActivity.this, BalanceActivity.class);
                     startActivity(balance);
+                }else{
+                    Intent reports = new Intent(MainActivity.this, ReportsActivity.class);
+                    startActivity(reports);
                 }
                 break;
         }
