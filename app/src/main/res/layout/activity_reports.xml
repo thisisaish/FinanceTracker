@@ -48,7 +48,7 @@
         android:textAlignment="center"
         android:textColor="@color/textColor" />
 
-    <ListView
+    <TableLayout
         android:id="@+id/transactions"
         android:layout_width="match_parent"
         android:layout_height="250dp"

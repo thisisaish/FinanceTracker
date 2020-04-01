@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -29,18 +33,20 @@ import java.util.List;
 import java.util.Random;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 public class ReportsActivity extends Activity {
 
     private FrameLayout graphView;
     private LineChart graph;
-    private ListView lists;
+    private TableLayout lists;
     private String[] items = new String[]{
-            "Food\t\t\tRs.450","Travel\t\t\tRs.120","Care\t\t\tRs.126","Transport\t\t\tRs.500","Health\t\t\tRs.526"
+            "Food","Travel","Care","Transport","Health"
     };
 
     private Button backBtn;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,9 +100,26 @@ public class ReportsActivity extends Activity {
         graph.invalidate();
 
         lists = findViewById(R.id.transactions);
-        List<String> itemsList = new ArrayList<>(Arrays.asList(items));
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(ReportsActivity.this, R.layout.list_row, itemsList);
-        lists.setAdapter(adapter);
+        for(int iter = 0;iter < items.length;iter++){
+            TableRow row = new TableRow(this);
+            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
+            row.setLayoutParams(params);
+            TextView label = new TextView(this);
+            label.setText(items[iter]);
+            label.setWidth(500);
+            label.setTextColor(getResources().getColor(R.color.textColor));
+            TextView cost = new TextView(this);
+            cost.setText("-Rs."+iter);
+            cost.setWidth(180);
+            cost.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+            cost.setTextColor(getResources().getColor(R.color.textColor));
+            row.addView(label);
+            row.addView(cost);
+            lists.addView(row,iter);
+        }
+//        List<String> itemsList = new ArrayList<>(Arrays.asList(items));
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(ReportsActivity.this, R.layout.list_row, itemsList);
+//        lists.setAdapter(adapter);
 
     }
 
