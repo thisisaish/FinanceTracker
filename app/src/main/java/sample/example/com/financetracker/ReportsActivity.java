@@ -1,10 +1,16 @@
 package sample.example.com.financetracker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -18,24 +24,41 @@ import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import androidx.annotation.Nullable;
 
 public class ReportsActivity extends Activity {
 
-    private LinearLayout linearLayout;
+    private FrameLayout graphView;
     private LineChart graph;
+    private ListView lists;
+    private String[] items = new String[]{
+            "Food\t\t\tRs.450","Travel\t\t\tRs.120","Care\t\t\tRs.126","Transport\t\t\tRs.500","Health\t\t\tRs.526"
+    };
+
+    private Button backBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
 
-        linearLayout = findViewById(R.id.reports);
+        backBtn = findViewById(R.id.button);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent home = new Intent(ReportsActivity.this, MainActivity.class);
+                startActivity(home);
+            }
+        });
+
+        graphView = findViewById(R.id.graphView);
 
         graph = new LineChart(this);
-        linearLayout.addView(graph);
+        graphView.addView(graph);
 
         graph.setNoDataText("No data available");
         graph.setTouchEnabled(true);
@@ -68,15 +91,19 @@ public class ReportsActivity extends Activity {
         yAxis.setAxisLineColor(Color.WHITE);
 
         graph.getAxisRight().setEnabled(false);
-
         graph.invalidate();
+
+        lists = findViewById(R.id.transactions);
+        List<String> itemsList = new ArrayList<>(Arrays.asList(items));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(ReportsActivity.this, R.layout.list_row, itemsList);
+        lists.setAdapter(adapter);
 
     }
 
     private void setData(LineChart graph){
         ArrayList<Entry> values = new ArrayList<>();
         for(int iter = 0;iter < 30;iter++){
-            values.add(new Entry(iter,new Random().nextInt(5000)));
+            values.add(new Entry(iter+1,new Random().nextInt(5000)));
         }
 
         LineDataSet dataSet;
@@ -96,8 +123,8 @@ public class ReportsActivity extends Activity {
             dataSet.setCircleColor(Color.WHITE);
             dataSet.setHighLightColor(Color.rgb(244, 117, 117));
             dataSet.setColor(getResources().getColor(R.color.graphStart));
-//            dataSet.setFillColor();
-            dataSet.setGradientColor(getResources().getColor(R.color.graphStart),getResources().getColor(R.color.graphEnd));
+            dataSet.setFillColor(getResources().getColor(R.color.graphEnd));
+//            dataSet.setGradientColor(getResources().getColor(R.color.graphStart),getResources().getColor(R.color.graphEnd));
             dataSet.setFillAlpha(100);
             dataSet.setDrawHorizontalHighlightIndicator(false);
             dataSet.setFillFormatter(new IFillFormatter() {
