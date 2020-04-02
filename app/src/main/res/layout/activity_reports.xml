@@ -11,20 +11,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/button"
-            android:layout_width="44dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="7dp"
-            android:background="@color/transparent"
-            android:text="Back"
-            android:textColor="@color/textColor" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/transparent"/>
 
         <TextView
-            android:layout_width="262dp"
-            android:layout_height="match_parent"
+            android:layout_width="275dp"
+            android:layout_height="55dp"
             android:gravity="center_horizontal"
-            android:paddingTop="10dp"
+            android:paddingTop="15dp"
             android:text="Reports"
             android:textAlignment="center"
             android:textColor="@color/textColor"

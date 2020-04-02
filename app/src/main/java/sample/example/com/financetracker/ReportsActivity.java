@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
@@ -44,7 +45,7 @@ public class ReportsActivity extends Activity {
             "Food","Travel","Care","Transport","Health"
     };
 
-    private Button backBtn;
+    private ImageButton backBtn;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -89,12 +90,13 @@ public class ReportsActivity extends Activity {
         xAxis.setTextColor(getResources().getColor(R.color.textColor));
         xAxis.setDrawGridLines(false);
         xAxis.setAvoidFirstLastClipping(true);
+        xAxis.setAxisLineColor(Color.TRANSPARENT);
 
         YAxis yAxis = graph.getAxisLeft();
         yAxis.setTextColor(getResources().getColor(R.color.textColor));
         yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         yAxis.setDrawGridLines(false);
-        yAxis.setAxisLineColor(Color.WHITE);
+        yAxis.setAxisLineColor(Color.TRANSPARENT);
 
         graph.getAxisRight().setEnabled(false);
         graph.invalidate();
@@ -108,6 +110,7 @@ public class ReportsActivity extends Activity {
             label.setText(items[iter]);
             label.setWidth(500);
             label.setTextColor(getResources().getColor(R.color.textColor));
+            label.setPadding(20,20,label.getPaddingRight(),20);
             TextView cost = new TextView(this);
             cost.setText("-Rs."+iter);
             cost.setWidth(180);
@@ -125,8 +128,8 @@ public class ReportsActivity extends Activity {
 
     private void setData(LineChart graph){
         ArrayList<Entry> values = new ArrayList<>();
-        for(int iter = 0;iter < 30;iter++){
-            values.add(new Entry(iter+1,new Random().nextInt(5000)));
+        for(int iter = 0;iter < 7;iter++){
+            values.add(new Entry(iter+1,new Random().nextInt(3000)));
         }
 
         LineDataSet dataSet;
