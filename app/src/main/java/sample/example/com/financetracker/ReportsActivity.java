@@ -110,9 +110,9 @@ public class ReportsActivity extends Activity {
             label.setText(items[iter]);
             label.setWidth(500);
             label.setTextColor(getResources().getColor(R.color.textColor));
-            label.setPadding(20,20,label.getPaddingRight(),20);
+            label.setPadding(20,30,label.getPaddingRight(),30);
             TextView cost = new TextView(this);
-            cost.setText("-Rs."+iter);
+            cost.setText("-Rs."+iter*1000);
             cost.setWidth(180);
             cost.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
             cost.setTextColor(getResources().getColor(R.color.textColor));

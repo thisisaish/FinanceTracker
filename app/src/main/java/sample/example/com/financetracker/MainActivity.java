@@ -104,11 +104,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void buildTheList(String lFileName,String lSheetName){
         try {
-//            if(storeExpenditures.getExpenditures(lFileName,lSheetName) != null)
-            storeExpenditures.getExpenditures(lFileName, lSheetName);
-            List<String> itemsList = new ArrayList<>(Arrays.asList(items));
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.list_row, itemsList);
+
+//            List<String> itemsList = new ArrayList<>(Arrays.asList(items));
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.list_row, storeExpenditures.getExpenditures(lFileName, lSheetName));
             lists.setAdapter(adapter);
+
         }catch (Exception ex){
             ex.printStackTrace();
         }

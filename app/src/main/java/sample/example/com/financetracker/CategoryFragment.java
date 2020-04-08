@@ -58,7 +58,7 @@ public class CategoryFragment extends Fragment {
         this.unfocused_category = focused_category;
 
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fragment1, new Calculator());
+        fragmentTransaction.replace(R.id.fragment1, new Calculator());
         fragmentTransaction.addToBackStack("category");
         fragmentTransaction.commit();
     }

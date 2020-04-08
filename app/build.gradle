@@ -39,20 +39,14 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
-    implementation files('libs\\commons-codec-1.11.jar')
-    implementation files('libs\\commons-collections4-4.2.jar')
-    implementation files('libs\\commons-compress-1.18.jar')
-    implementation files('libs\\poi-4.0.1.jar')
-    implementation files('libs\\poi-ooxml-4.0.1.jar')
-    implementation files('libs\\poi-ooxml-schemas-4.0.1.jar')
-    implementation files('libs\\xmlbeans-3.0.2.jar')
+//    implementation files('libs\\commons-codec-1.11.jar')
+//    implementation files('libs\\commons-collections4-4.2.jar')
+//    implementation files('libs\\commons-compress-1.18.jar')
+//    implementation files('libs\\poi-4.0.1.jar')
+//    implementation files('libs\\poi-ooxml-4.0.1.jar')
+//    implementation files('libs\\poi-ooxml-schemas-4.0.1.jar')
+//    implementation files('libs\\xmlbeans-3.0.2.jar')
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-//    implementation files('libs\\commons-codec-1.13.jar')
-//    implementation files('libs\\commons-collections4-4.4.jar')
-//    implementation files('libs\\commons-compress-1.19.jar')
-//    implementation files('libs\\poi-4.1.2.jar')
-//    implementation files('libs\\poi-ooxml-4.1.2.jar')
-//    implementation files('libs\\poi-ooxml-schemas-4.1.2.jar')
-//    implementation files('libs\\xmlbeans-3.1.0.jar')
+    implementation files('libs\\jxl.jar')
 }

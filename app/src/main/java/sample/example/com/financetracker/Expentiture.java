@@ -72,7 +72,7 @@ public class Expentiture extends FragmentActivity {
         printList();
         if(!expenditures.isEmpty()){
             StoreExpenditures storeExpenditures = new StoreExpenditures();
-//            storeExpenditures.writeIntoSpreadSheet(fileName,sheetName,expenditures);
+            storeExpenditures.writeIntoSpreadSheet(fileName,sheetName,expenditures);
         }
         clearList();
     }
