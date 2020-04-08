@@ -56,13 +56,16 @@
                     android:paddingTop="15dp"
                     android:gravity="center_horizontal" />
 
-                <ListView
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="180dp">
+                <TableLayout
                     android:id="@+id/itemsList"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="180dp"
                     android:orientation="vertical">
-
-                </ListView>
+                </TableLayout>
+            </ScrollView>
 
         </LinearLayout>
 </RelativeLayout>

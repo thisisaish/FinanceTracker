@@ -15,10 +15,12 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 
 import jxl.Cell;
+import jxl.CellType;
 import jxl.Range;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.format.Colour;
+import jxl.read.biff.BiffException;
 import jxl.write.Label;
 import jxl.write.Number;
 import jxl.write.WritableCell;
@@ -44,9 +46,12 @@ public class StoreExpenditures {
                     createNewWorkbook(xlFile, sheetName);
             } else if(file.exists()) {
                 File xlFile = new File(file.getAbsolutePath(), fileName);
-                if(!xlFile.exists() && xlFile.createNewFile())
+                if(!xlFile.exists() && xlFile.createNewFile()) {
                     System.out.println(fileName + " created!");
-                createNewWorkbook(xlFile,sheetName);
+                    createNewWorkbook(xlFile, sheetName);
+                }else{
+                    updateWorkbook(xlFile,sheetName);
+                }
             }
         }catch (Exception ex){
             ex.printStackTrace();
@@ -55,53 +60,42 @@ public class StoreExpenditures {
     }
 
     private void updateWorkbook(File file,String sheetName){
-        FileInputStream inputStream = null;
-//        Workbook workbook = null;
-//        try {
-//
-//            inputStream = new FileInputStream(file);
-//            workbook = WorkbookFactory.create(inputStream);
-//            Sheet sheet = workbook.getSheet(sheetName);
-//
-//            int rowNum = 0;
-//            Double prevTotal = 0.0;
-//            if(sheet == null){
-//                sheet = workbook.createSheet(sheetName);
-//            }else{
-//                rowNum = sheet.getLastRowNum() - 1;
-//                Cell cell = sheet.getRow(rowNum-1).getCell(1);
-//                prevTotal = cell.getNumericCellValue();
-//            }
-//
-//            Set set = expenditures.entrySet();
-//            Iterator iter = set.iterator();
-//            while (iter.hasNext()){
-//
-//                String cellValues[] = iter.next().toString().split(" = Rs. ");
-//                Row row = sheet.createRow(rowNum);
-//                row.createCell(0).setCellValue(cellValues[0].trim());
-//                if(cellValues[0].equalsIgnoreCase("Total")){
-//                    prevTotal += Double.parseDouble(cellValues[1]);
-//                    row.createCell(1).setCellValue(prevTotal);
-//                }else{
-//                    row.createCell(1).setCellValue(Double.parseDouble(cellValues[1]));
-//                }
-//                rowNum++;
-//            }
-//            FileOutputStream outputStream = new FileOutputStream(file);
-//            workbook.write(outputStream);
-//            outputStream.close();
-//            System.out.println(file.getName()+" updated successfully");
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }finally {
-//            try {
-//                inputStream.close();
-//            }catch (IOException ioe){
-//                ioe.printStackTrace();
-//            }
-//        }
+        Workbook workbook = null;
+        WritableWorkbook writableWorkbook = null;
+        try{
+            System.out.println(file.getAbsolutePath());
+            File tempFile = new File(file.getPath().replaceAll("/"+file.getName(),""),"temp.xls");
+            tempFile.createNewFile();
+            workbook = Workbook.getWorkbook(file);
+            writableWorkbook = Workbook.createWorkbook(tempFile,workbook);
+            WritableSheet sheet = writableWorkbook.createSheet(sheetName,workbook.getNumberOfSheets());
+            Label label = new Label(0,0,"Transaction");
+            sheet.addCell(label);
+
+            label = new Label(1,0,"Amount");
+            sheet.addCell(label);
+
+            Set set = expenditures.entrySet();
+            Iterator iter = set.iterator();
+            int row = 1;
+            while(iter.hasNext()){
+                String[] cells = iter.next().toString().split("= Rs. ");
+                label = new Label(0,row,cells[0]);
+                sheet.addCell(label);
+                Number number = new Number(1,row,Float.parseFloat(cells[1]));
+                sheet.addCell(number);
+                System.out.println("Writing "+row+" "+cells[0]+"->"+cells[1]);
+                row++;
+            }
+            writableWorkbook.write();
+            workbook.close();
+            writableWorkbook.close();
+
+            file.delete();
+            tempFile.renameTo(file);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     private void createNewWorkbook(File file,String sheetName){
@@ -152,15 +146,18 @@ public class StoreExpenditures {
         Workbook workbook = null;
         try{
 
-            workbook = Workbook.getWorkbook(new File(filePath+fileName+".xls"));
+            workbook = Workbook.getWorkbook(new File(filePath+"//"+fileName+".xls"));
             Sheet sheet = workbook.getSheet(sheetName);
             for(int row = 0;row < sheet.getRows();row++) {
                 String content = "";
                 for(int col = 0;col < sheet.getColumns();col++) {
                     Cell cell = sheet.getCell(col, row);
-                    System.out.print(cell.getContents()+" ");
-                    content += cell.getContents()+" ";
-                }System.out.println();
+                    if(cell.getType() == CellType.NUMBER){
+                        content += "- Rs." + cell.getContents();
+                    }else{
+                        content += cell.getContents() + " ";
+                    }
+                }
                 expenditures.add(content);
             }
 

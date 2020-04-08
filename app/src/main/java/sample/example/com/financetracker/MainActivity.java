@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.MultiDexApplication;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private CalendarView calendarView;
 
     private TextView textView;
-    private ListView lists;
+    private TableLayout lists;
     private String[] items = new String[]{
             "Food","Travel","Care","Transport","Health"
     };
@@ -104,10 +107,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void buildTheList(String lFileName,String lSheetName){
         try {
-
-//            List<String> itemsList = new ArrayList<>(Arrays.asList(items));
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, R.layout.list_row, storeExpenditures.getExpenditures(lFileName, lSheetName));
-            lists.setAdapter(adapter);
+            lists.removeAllViewsInLayout();
+            int index = 0;
+            ArrayList<String> fetchedItems = new ArrayList<>(storeExpenditures.getExpenditures(lFileName, lSheetName));
+            for(String fetchedItem : fetchedItems){
+                TableRow row = new TableRow(this);
+                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
+                row.setLayoutParams(params);
+                String[] cells = null;
+                if(fetchedItem.contains(" - Rs.")){
+                     cells = fetchedItem.split(" - Rs.");
+                     cells[1] = "- Rs."+cells[1];
+                }else{
+                    cells = fetchedItem.split(" ");
+                }
+                lists.addView(setCellContents(row,cells),index++);
+            }
+//            lists.setAdapter(new ArrayAdapter<>());
 
         }catch (Exception ex){
             ex.printStackTrace();
@@ -119,6 +135,24 @@ public class MainActivity extends AppCompatActivity {
         sheetName = new SimpleDateFormat("dd.MM.yyyy").format(calendarView.getDate());
         Intent catagory = new Intent(MainActivity.this, Expentiture.class);
         startActivity(catagory);
+    }
+
+    private TableRow setCellContents(TableRow row,String[] cellValues){
+        TextView cell = new TextView(this);
+        cell.setText(cellValues[0]);
+        cell.setWidth(500);
+        cell.setTextColor(getResources().getColor(R.color.textColor));
+        cell.setPadding(20,30,cell.getPaddingRight(),30);
+        TextView cost = new TextView(this);
+        cost.setText(cellValues[1]);
+        cost.setWidth(180);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            cost.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+        }
+        cost.setTextColor(getResources().getColor(R.color.textColor));
+        row.addView(cell);
+        row.addView(cost);
+        return row;
     }
 
 }

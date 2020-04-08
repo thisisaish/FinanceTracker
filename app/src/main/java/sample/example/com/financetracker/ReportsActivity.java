@@ -120,9 +120,6 @@ public class ReportsActivity extends Activity {
             row.addView(cost);
             lists.addView(row,iter);
         }
-//        List<String> itemsList = new ArrayList<>(Arrays.asList(items));
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(ReportsActivity.this, R.layout.list_row, itemsList);
-//        lists.setAdapter(adapter);
 
     }
 
