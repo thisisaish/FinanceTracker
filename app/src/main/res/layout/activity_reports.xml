@@ -36,8 +36,7 @@
     <FrameLayout
         android:id="@+id/graphView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_height="300dp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -48,10 +47,15 @@
         android:textAlignment="center"
         android:textColor="@color/textColor" />
 
-    <TableLayout
-        android:id="@+id/transactions"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:orientation="vertical"/>
+        android:layout_height="250dp">
+        <TableLayout
+            android:id="@+id/transactions"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:orientation="vertical"/>
+    </ScrollView>
+
 
 </LinearLayout>

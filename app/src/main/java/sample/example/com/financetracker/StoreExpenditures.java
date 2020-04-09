@@ -115,10 +115,17 @@ public class StoreExpenditures {
             Iterator iter = set.iterator();
             int row = 1;
             while(iter.hasNext()){
-                String[] cells = iter.next().toString().split("= Rs. ");
+                String[] cells = null;
+                Number number = null;
+                if(iter.next().toString().contains("= -Rs. ")){
+                    cells = iter.next().toString().split("= -Rs. ");
+                    number = new Number(1,row,Float.parseFloat("-"+cells[1]));
+                }else if(iter.next().toString().contains("= Rs. ")){
+                    cells = iter.next().toString().split("= Rs. ");
+                    number = new Number(1,row,Float.parseFloat(cells[1]));
+                }
                 label = new Label(0,row,cells[0]);
                 sheet.addCell(label);
-                Number number = new Number(1,row,Float.parseFloat(cells[1]));
                 sheet.addCell(number);
                 System.out.println("Writing "+row+" "+cells[0]+"->"+cells[1]);
                 row++;

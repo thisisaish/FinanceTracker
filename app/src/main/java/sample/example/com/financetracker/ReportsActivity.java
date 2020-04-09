@@ -25,13 +25,19 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IFillFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -41,9 +47,7 @@ public class ReportsActivity extends Activity {
     private FrameLayout graphView;
     private LineChart graph;
     private TableLayout lists;
-    private String[] items = new String[]{
-            "Food","Travel","Care","Transport","Health"
-    };
+    HashMap<String,Float> transactions = null;
 
     private ImageButton backBtn;
 
@@ -75,7 +79,7 @@ public class ReportsActivity extends Activity {
         graph.setDrawGridBackground(false);
         graph.setPinchZoom(true);
         graph.setBackgroundColor(getResources().getColor(R.color.transparent));
-        graph.setMinimumHeight(800);
+        graph.setMinimumHeight(600);
 
         LineData data = new LineData();
         data.setValueTextColor(getResources().getColor(R.color.textColor));
@@ -90,7 +94,19 @@ public class ReportsActivity extends Activity {
         xAxis.setTextColor(getResources().getColor(R.color.textColor));
         xAxis.setDrawGridLines(false);
         xAxis.setAvoidFirstLastClipping(true);
-        xAxis.setAxisLineColor(Color.TRANSPARENT);
+        xAxis.setAxisLineColor(Color.rgb(255,171,200));
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setLabelRotationAngle(295f);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(){
+            @Override
+            public String getFormattedValue(float value) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DATE, (int)value - 7);
+                Date date = calendar.getTime();
+                String sDate = new SimpleDateFormat("dd.MM.yyyy").format(date);
+                return sDate;
+            }
+        });
 
         YAxis yAxis = graph.getAxisLeft();
         yAxis.setTextColor(getResources().getColor(R.color.textColor));
@@ -102,32 +118,37 @@ public class ReportsActivity extends Activity {
         graph.invalidate();
 
         lists = findViewById(R.id.transactions);
-        for(int iter = 0;iter < items.length;iter++){
-            TableRow row = new TableRow(this);
-            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
-            row.setLayoutParams(params);
-            TextView label = new TextView(this);
-            label.setText(items[iter]);
-            label.setWidth(500);
-            label.setTextColor(getResources().getColor(R.color.textColor));
-            label.setPadding(20,30,label.getPaddingRight(),30);
-            TextView cost = new TextView(this);
-            cost.setText("-Rs."+iter*1000);
-            cost.setWidth(180);
-            cost.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
-            cost.setTextColor(getResources().getColor(R.color.textColor));
-            row.addView(label);
-            row.addView(cost);
-            lists.addView(row,iter);
+        Set<String> keys = transactions.keySet();
+        int iter = 0;
+        for(String key : keys){
+            System.out.println(key+transactions.get(key));
+            if(transactions.get(key.trim()) != 0.0f){
+                TableRow row = new TableRow(this);
+                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
+                row.setLayoutParams(params);
+                TextView label = new TextView(this);
+                label.setText(key);
+                label.setWidth(500);
+                label.setTextColor(getResources().getColor(R.color.textColor));
+                label.setPadding(20,30,label.getPaddingRight(),30);
+                TextView cost = new TextView(this);
+                cost.setText("- Rs."+transactions.get(key.trim()));
+                cost.setWidth(180);
+                cost.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+                cost.setTextColor(getResources().getColor(R.color.textColor));
+                row.addView(label);
+                row.addView(cost);
+                lists.addView(row,iter);
+                iter++;
+            }
         }
 
     }
 
     private void setData(LineChart graph){
-        ArrayList<Entry> values = new ArrayList<>();
-        for(int iter = 0;iter < 7;iter++){
-            values.add(new Entry(iter+1,new Random().nextInt(3000)));
-        }
+        FetchValues fetchValues = new FetchValues();
+        ArrayList<Entry> values = fetchValues.getWeeklyTransactions();
+        transactions = fetchValues.getTransactions();
 
         LineDataSet dataSet;
         if(graph.getData() != null && graph.getData().getDataSetCount() > 0){
@@ -136,7 +157,11 @@ public class ReportsActivity extends Activity {
             graph.getData().notifyDataChanged();
             graph.notifyDataSetChanged();
         }else{
-            dataSet = new LineDataSet(values,"March 2020");
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, - 7);
+            Date date = calendar.getTime();
+            String desc = new SimpleDateFormat("MMM-yyyy").format(date);
+            dataSet = new LineDataSet(values,desc);
             dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             dataSet.setCubicIntensity(0.2f);
             dataSet.setDrawFilled(true);
