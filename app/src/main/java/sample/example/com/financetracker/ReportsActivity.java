@@ -33,9 +33,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -91,25 +97,25 @@ public class ReportsActivity extends Activity {
         legend.setTextColor(getResources().getColor(R.color.textColor));
 
         XAxis xAxis = graph.getXAxis();
-        xAxis.setTextColor(getResources().getColor(R.color.textColor));
+        xAxis.setTextColor(getResources().getColor(R.color.mildText));
         xAxis.setDrawGridLines(false);
         xAxis.setAvoidFirstLastClipping(true);
         xAxis.setAxisLineColor(Color.rgb(255,171,200));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setLabelRotationAngle(295f);
+        xAxis.setLabelRotationAngle(330f);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(){
             @Override
             public String getFormattedValue(float value) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DATE, (int)value - 7);
                 Date date = calendar.getTime();
-                String sDate = new SimpleDateFormat("dd.MM.yyyy").format(date);
+                String sDate = new SimpleDateFormat("dd.MM.yy").format(date);
                 return sDate;
             }
         });
 
         YAxis yAxis = graph.getAxisLeft();
-        yAxis.setTextColor(getResources().getColor(R.color.textColor));
+        yAxis.setTextColor(getResources().getColor(R.color.mildText));
         yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         yAxis.setDrawGridLines(false);
         yAxis.setAxisLineColor(Color.TRANSPARENT);
@@ -118,29 +124,31 @@ public class ReportsActivity extends Activity {
         graph.invalidate();
 
         lists = findViewById(R.id.transactions);
+        transactions = sortByValues();
         Set<String> keys = transactions.keySet();
         int iter = 0;
         for(String key : keys){
             System.out.println(key+transactions.get(key));
-            if(transactions.get(key.trim()) != 0.0f){
-                TableRow row = new TableRow(this);
-                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
-                row.setLayoutParams(params);
-                TextView label = new TextView(this);
-                label.setText(key);
-                label.setWidth(500);
-                label.setTextColor(getResources().getColor(R.color.textColor));
-                label.setPadding(20,30,label.getPaddingRight(),30);
-                TextView cost = new TextView(this);
-                cost.setText("- Rs."+transactions.get(key.trim()));
-                cost.setWidth(180);
-                cost.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
-                cost.setTextColor(getResources().getColor(R.color.textColor));
-                row.addView(label);
-                row.addView(cost);
-                lists.addView(row,iter);
-                iter++;
+            if(transactions.get(key.trim()) == 0.0f){
+                break;
             }
+            TableRow row = new TableRow(this);
+            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
+            row.setLayoutParams(params);
+            TextView label = new TextView(this);
+            label.setText(key);
+            label.setWidth(500);
+            label.setTextColor(getResources().getColor(R.color.mildText));
+            label.setPadding(20,30,label.getPaddingRight(),30);
+            TextView cost = new TextView(this);
+            cost.setText("- Rs."+transactions.get(key.trim()));
+            cost.setWidth(180);
+            cost.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+            cost.setTextColor(getResources().getColor(R.color.mildText));
+            row.addView(label);
+            row.addView(cost);
+            lists.addView(row,iter);
+            iter++;
         }
 
     }
@@ -191,5 +199,24 @@ public class ReportsActivity extends Activity {
             // set data
             graph.setData(data);
         }
+    }
+
+    private HashMap<String,Float> sortByValues(){
+        List list = new LinkedList(transactions.entrySet());
+
+        Collections.sort(list, new Comparator<Object>() {
+            @Override
+            public int compare(Object o, Object t1) {
+                return ((Comparable)((Map.Entry)(t1)).getValue()).compareTo(((Map.Entry)(o)).getValue());
+            }
+        });
+
+        HashMap<String,Float> temp = new LinkedHashMap<>();
+        for(Iterator iter = list.iterator();iter.hasNext();){
+            Map.Entry entry = (Map.Entry)iter.next();
+            temp.put((String)entry.getKey(), (Float)entry.getValue());
+            System.out.println(temp);
+        }
+        return temp;
     }
 }

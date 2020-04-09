@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         addBtn = findViewById(R.id.floatingActionButton);
 
         calendarView.setMaxDate(calendarView.getDate());
+        textView.setTextColor(getResources().getColor(R.color.mildText));
         textView.setText(new SimpleDateFormat("dd.MM.yyyy").format(calendarView.getDate()));
 
         lFileName = new SimpleDateFormat("MMM-yyyy").format(calendarView.getDate());
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         TextView cell = new TextView(this);
         cell.setText(cellValues[0]);
         cell.setWidth(500);
-        cell.setTextColor(getResources().getColor(R.color.textColor));
+        cell.setTextColor(getResources().getColor(R.color.mildText));
         cell.setPadding(20,30,cell.getPaddingRight(),30);
         TextView cost = new TextView(this);
         cost.setText(cellValues[1]);
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             cost.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
         }
-        cost.setTextColor(getResources().getColor(R.color.textColor));
+        cost.setTextColor(getResources().getColor(R.color.mildText));
         row.addView(cell);
         row.addView(cost);
         return row;
