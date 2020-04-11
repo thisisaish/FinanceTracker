@@ -2,16 +2,13 @@ package sample.example.com.financetracker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.multidex.MultiDexApplication;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
-import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -20,10 +17,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import static sample.example.com.financetracker.Expentiture.fileName;
-import static sample.example.com.financetracker.Expentiture.sheetName;
+
+import static sample.example.com.financetracker.ExpentitureActivity.fileName;
+import static sample.example.com.financetracker.ExpentitureActivity.sheetName;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -111,21 +107,26 @@ public class MainActivity extends AppCompatActivity {
             lists.removeAllViewsInLayout();
             int index = 0;
             ArrayList<String> fetchedItems = new ArrayList<>(storeExpenditures.getExpenditures(lFileName, lSheetName));
-            for(String fetchedItem : fetchedItems){
+            if(fetchedItems.size() == 1){
                 TableRow row = new TableRow(this);
                 TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
                 row.setLayoutParams(params);
-                String[] cells = null;
-                if(fetchedItem.contains(" - Rs.")){
-                     cells = fetchedItem.split(" - Rs.");
-                     cells[1] = "- Rs."+cells[1];
-                }else{
-                    cells = fetchedItem.split(" ");
+                lists.addView(setCellContents(row,new String[]{"No transactions found",""}),index);
+            }else {
+                for (String fetchedItem : fetchedItems) {
+                    TableRow row = new TableRow(this);
+                    TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
+                    row.setLayoutParams(params);
+                    String[] cells = null;
+                    if (fetchedItem.contains(" - Rs.")) {
+                        cells = fetchedItem.split(" - Rs.");
+                        cells[1] = "- Rs." + cells[1];
+                    } else {
+                        cells = fetchedItem.split(" ");
+                    }
+                    lists.addView(setCellContents(row, cells), index++);
                 }
-                lists.addView(setCellContents(row,cells),index++);
             }
-//            lists.setAdapter(new ArrayAdapter<>());
-
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     private void navigateToNextEvent(){
         fileName = new SimpleDateFormat("MMM-yyyy").format(calendarView.getDate());
         sheetName = new SimpleDateFormat("dd.MM.yyyy").format(calendarView.getDate());
-        Intent catagory = new Intent(MainActivity.this, Expentiture.class);
+        Intent catagory = new Intent(MainActivity.this, ExpentitureActivity.class);
         startActivity(catagory);
     }
 

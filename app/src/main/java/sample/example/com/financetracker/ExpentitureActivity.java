@@ -17,7 +17,7 @@ import static sample.example.com.financetracker.Transactions.printList;
 import static sample.example.com.financetracker.Transactions.removeJunks;
 import static sample.example.com.financetracker.R.color.transparent;
 
-public class Expentiture extends FragmentActivity {
+public class ExpentitureActivity extends FragmentActivity {
 
     protected static String fileName,sheetName;
 
@@ -30,7 +30,7 @@ public class Expentiture extends FragmentActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.expenditures_fragment);
+        setContentView(R.layout.activity_expenditure);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
