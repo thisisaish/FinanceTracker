@@ -28,8 +28,11 @@ public class Calculator extends Fragment{
                             R.id.add_btn,R.id.sub_btn,R.id.mult_btn,R.id.div_btn};
 
     private float valueRes;
+    StoreBalance storeBalance = new StoreBalance();
+    Float[] balance = storeBalance.getBalance();
 
     String dispText = "";
+    static int index = 1;
 
     @Nullable
     @Override
@@ -65,6 +68,7 @@ public class Calculator extends Fragment{
                         else
                             expenditures.put(lastElement.toString().split("=")[0], " Rs. " + valueRes);
                         updateTotal(valueRes);
+                        balance[index] -= valueRes;
                         textView.setText("");
                         if(valueRes == (int)valueRes)
                             textView.setText(dispText + "" + (int)valueRes);
@@ -139,6 +143,7 @@ public class Calculator extends Fragment{
     }
 
     private void getOldActivity(){
+        storeBalance.setBalance(balance);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.popBackStack("category",fragmentManager.POP_BACK_STACK_INCLUSIVE);
     }

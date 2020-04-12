@@ -40,9 +40,11 @@ public class ExpentitureActivity extends FragmentActivity {
         for(int i = 0;i < 3;i++){
             modeOfPayment[i] = findViewById(btn_id[i]);
             final Button btn = modeOfPayment[i];
+            int index = i;
             modeOfPayment[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Calculator.index = index;
                     setFocus(btn_unfocus,btn);
                 }
             });

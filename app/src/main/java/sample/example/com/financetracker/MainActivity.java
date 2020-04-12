@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton addBtn;
     private StoreExpenditures storeExpenditures = new StoreExpenditures();
     private String lFileName,lSheetName;
+    private boolean addIcon = true;
 
     float x1,x2,y1,y2;
 
@@ -72,12 +73,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navigateToNextEvent();
-            }
-        });
+        if(addIcon) {
+            addBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addIcon = false;
+                    addBtn.setImageDrawable(getResources().getDrawable(R.mipmap.editicon));
+                    navigateToNextEvent();
+                }
+            });
+        }else if(!addIcon){
+            addBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addIcon = true;
+                    addBtn.setImageDrawable(getResources().getDrawable(R.mipmap.ft_add));
+                    //update existing file
+                }
+            });
+        }
 
     }
 
@@ -108,11 +122,15 @@ public class MainActivity extends AppCompatActivity {
             int index = 0;
             ArrayList<String> fetchedItems = new ArrayList<>(storeExpenditures.getExpenditures(lFileName, lSheetName));
             if(fetchedItems.size() == 1){
+                addIcon = true;
+                addBtn.setImageDrawable(getResources().getDrawable(R.mipmap.ft_add));
                 TableRow row = new TableRow(this);
                 TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
                 row.setLayoutParams(params);
                 lists.addView(setCellContents(row,new String[]{"No transactions found",""}),index);
             }else {
+                addIcon = false;
+                addBtn.setImageDrawable(getResources().getDrawable(R.mipmap.editicon));
                 for (String fetchedItem : fetchedItems) {
                     TableRow row = new TableRow(this);
                     TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
