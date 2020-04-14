@@ -18,6 +18,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -120,6 +121,8 @@ public class ReportsActivity extends Activity {
         yAxis.setDrawGridLines(false);
         yAxis.setAxisLineColor(Color.TRANSPARENT);
 
+        Description desc = graph.getDescription();
+        desc.setEnabled(false);
         graph.getAxisRight().setEnabled(false);
         graph.invalidate();
         graph.animateXY(2000,1400);

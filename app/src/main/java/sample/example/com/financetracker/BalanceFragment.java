@@ -62,7 +62,8 @@ public class BalanceFragment extends Fragment {
         pieDataSet = new PieDataSet(pieEntries, "Balance");
         pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
-        pieChart.setDescription(new Description());
+        Description desc = pieChart.getDescription();
+        desc.setEnabled(false);
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieDataSet.setSliceSpace(1f);
         pieDataSet.setValueTextColor(Color.WHITE);
