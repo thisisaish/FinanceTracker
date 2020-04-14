@@ -67,32 +67,67 @@ public class StoreExpenditures {
             File tempFile = new File(file.getPath().replaceAll("/"+file.getName(),""),"temp.xls");
             tempFile.createNewFile();
             workbook = Workbook.getWorkbook(file);
-            writableWorkbook = Workbook.createWorkbook(tempFile,workbook);
-            WritableSheet sheet = writableWorkbook.createSheet(sheetName,workbook.getNumberOfSheets());
-            Label label = new Label(0,0,"Transaction");
-            sheet.addCell(label);
-
-            label = new Label(1,0,"Amount");
-            sheet.addCell(label);
-
-            Set set = expenditures.entrySet();
-            Iterator iter = set.iterator();
-            int row = 1;
-            while(iter.hasNext()){
-                String[] cells = iter.next().toString().split("= Rs. ");
-                label = new Label(0,row,cells[0]);
+            Sheet anotherSheet;
+            if((anotherSheet = workbook.getSheet(sheetName)) == null) {
+                writableWorkbook = Workbook.createWorkbook(tempFile, workbook);
+                WritableSheet sheet = writableWorkbook.createSheet(sheetName, workbook.getNumberOfSheets());
+                Label label = new Label(0, 0, "Transaction");
                 sheet.addCell(label);
-                Number number = new Number(1,row,Float.parseFloat(cells[1]));
-                sheet.addCell(number);
-                System.out.println("Writing "+row+" "+cells[0]+"->"+cells[1]);
-                row++;
-            }
-            writableWorkbook.write();
-            workbook.close();
-            writableWorkbook.close();
 
-            file.delete();
-            tempFile.renameTo(file);
+                label = new Label(1, 0, "Amount");
+                sheet.addCell(label);
+
+                Set set = expenditures.entrySet();
+                Iterator iter = set.iterator();
+                int row = 1;
+                while (iter.hasNext()) {
+                    String[] cells = iter.next().toString().split("= Rs. ");
+                    label = new Label(0, row, cells[0]);
+                    sheet.addCell(label);
+                    Number number = new Number(1, row, Float.parseFloat(cells[1]));
+                    sheet.addCell(number);
+                    System.out.println("Writing " + row + " " + cells[0] + "->" + cells[1]);
+                    row++;
+                }
+                writableWorkbook.write();
+                workbook.close();
+                writableWorkbook.close();
+
+                file.delete();
+                tempFile.renameTo(file);
+            }else{
+                //update existing sheet
+                writableWorkbook = Workbook.createWorkbook(tempFile,workbook);
+                WritableSheet sheet = writableWorkbook.getSheet(sheetName);
+
+                float prevTotal = Float.parseFloat(anotherSheet.getCell(anotherSheet.getColumns()-1,anotherSheet.getRows()-1).toString());
+                Set set = expenditures.entrySet();
+                Iterator iter = set.iterator();
+
+                int row = anotherSheet.getRows()-1;
+                while(iter.hasNext()){
+                    String[] cells = iter.next().toString().split("= Rs. ");
+                    Label label = new Label(0, row, cells[0]);
+                    sheet.addCell(label);
+                    prevTotal += Float.parseFloat(cells[1]);
+                    Number number = new Number(1, row, Float.parseFloat(cells[1]));
+                    sheet.addCell(number);
+                    System.out.println("Writing " + row + " " + cells[0] + "->" + cells[1]);
+                    row++;
+                }
+
+                Label label = new Label(0,row,"Total");
+                sheet.addCell(label);
+                Number number = new Number(1,row,prevTotal);
+                sheet.addCell(number);
+
+                writableWorkbook.write();
+                writableWorkbook.close();
+                workbook.close();
+
+                file.delete();
+                tempFile.renameTo(file);
+            }
         }catch(Exception ex){
             ex.printStackTrace();
         }

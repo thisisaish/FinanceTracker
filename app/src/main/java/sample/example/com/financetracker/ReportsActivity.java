@@ -122,6 +122,7 @@ public class ReportsActivity extends Activity {
 
         graph.getAxisRight().setEnabled(false);
         graph.invalidate();
+        graph.animateXY(2000,1400);
 
         lists = findViewById(R.id.transactions);
         transactions = sortByValues();

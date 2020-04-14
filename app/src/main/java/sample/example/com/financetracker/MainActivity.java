@@ -73,25 +73,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(addIcon) {
-            addBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    addIcon = false;
-                    addBtn.setImageDrawable(getResources().getDrawable(R.mipmap.editicon));
-                    navigateToNextEvent();
-                }
-            });
-        }else if(!addIcon){
-            addBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    addIcon = true;
-                    addBtn.setImageDrawable(getResources().getDrawable(R.mipmap.ft_add));
-                    //update existing file
-                }
-            });
-        }
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToNextEvent();
+            }
+        });
+
 
     }
 

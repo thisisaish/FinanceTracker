@@ -31,6 +31,12 @@ public class BalanceUpdateFragment extends Fragment {
         cashBal = view.findViewById(R.id.cash_value);
         savingsBal = view.findViewById(R.id.savings_value);
 
+        StoreBalance storeBalance = new StoreBalance();
+        amt = storeBalance.getBalance();
+
+        creditCardBal.setText(amt[0]+"");
+        cashBal.setText(amt[1]+"");
+        savingsBal.setText(amt[2]+"");
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +52,6 @@ public class BalanceUpdateFragment extends Fragment {
                     amt[2] = Float.parseFloat(savingsBal.getText().toString());
                 }
 
-                StoreBalance storeBalance = new StoreBalance();
                 storeBalance.setBalance(amt);
 
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();

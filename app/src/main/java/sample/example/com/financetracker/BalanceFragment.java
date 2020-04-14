@@ -1,12 +1,22 @@
 package sample.example.com.financetracker;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +28,12 @@ public class BalanceFragment extends Fragment {
 
     TextView credit,cash,savings,totalView;
     Float[] balance;
+    String[] values = {"Credit card","Cash","Savings"};
+
+    PieChart pieChart;
+    PieData pieData;
+    PieDataSet pieDataSet;
+    ArrayList pieEntries;
 
     @Nullable
     @Override
@@ -38,14 +54,21 @@ public class BalanceFragment extends Fragment {
         Float total = balance[0]+balance[1]+balance[2];
         totalView.setText("Rs."+total);
 
-//        ImageButton back = getActivity().findViewById(R.id.button);
-//        back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent home = new Intent(getContext(), MainActivity.class);
-//                startActivity(home);
-//            }
-//        });
+        pieChart = view.findViewById(R.id.pieChart);
+        pieEntries = new ArrayList();
+        for(int iter = 0;iter < 3;iter++) {
+            pieEntries.add(new PieEntry(balance[iter], values[iter]));
+        }
+        pieDataSet = new PieDataSet(pieEntries, "Balance");
+        pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.setDescription(new Description());
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieDataSet.setSliceSpace(1f);
+        pieDataSet.setValueTextColor(Color.WHITE);
+        pieDataSet.setValueTextSize(10f);
+
+        pieChart.animateXY(1400,1400);
 
         return view;
     }
